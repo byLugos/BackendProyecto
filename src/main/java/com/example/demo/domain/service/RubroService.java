@@ -3,6 +3,8 @@ package com.example.demo.domain.service;
 import com.example.demo.domain.models.Rubro;
 import com.example.demo.domain.ports.in.rubro.RubroIn;
 import com.example.demo.domain.ports.out.rubro.RubroOut;
+import com.example.demo.domain.validation.ValidationRubro;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,16 +21,22 @@ public class RubroService implements RubroIn {
 
     @Override
     public Rubro crearRubro(String nombre, Double montoAsignado, Date fechaLimite) {
+        // Validar datos del rubro antes de crear
+        ValidationRubro.validarDatosRubro(nombre, montoAsignado, fechaLimite);
+
         Rubro rubro = new Rubro(null, nombre, montoAsignado, fechaLimite);
         return rubroOut.guardarRubro(rubro);
     }
 
     @Override
     public Rubro actualizarRubro(Long id, String nombre, Double montoAsignado, Date fechaLimite) {
+        // Validar datos del rubro
+        ValidationRubro.validarDatosRubro(nombre, montoAsignado, fechaLimite);
+
+        // Validar existencia del rubro
         Rubro rubro = rubroOut.buscarPorId(id);
-        if (rubro == null) {
-            throw new IllegalArgumentException("El rubro con ID " + id + " no existe.");
-        }
+        ValidationRubro.validarExistenciaRubro(rubro, id);
+
         rubro.setNombre(nombre);
         rubro.setMontoAsignado(montoAsignado);
         rubro.setFechaLimite(fechaLimite);
@@ -37,15 +45,19 @@ public class RubroService implements RubroIn {
 
     @Override
     public void eliminarRubro(Long id) {
+        // Validar existencia del rubro
+        Rubro rubro = rubroOut.buscarPorId(id);
+        ValidationRubro.validarExistenciaRubro(rubro, id);
+
         rubroOut.eliminarRubro(id);
     }
 
     @Override
     public Rubro obtenerRubroPorId(Long id) {
+        // Validar existencia del rubro
         Rubro rubro = rubroOut.buscarPorId(id);
-        if (rubro == null) {
-            throw new IllegalArgumentException("El rubro con ID " + id + " no existe.");
-        }
+        ValidationRubro.validarExistenciaRubro(rubro, id);
+
         return rubro;
     }
 

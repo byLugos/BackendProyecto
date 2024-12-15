@@ -14,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class AsignacionResponse {
     private Long id;
+    private String nombre;
     private Double monto;
     private Date fecha;
     private String descripcion;

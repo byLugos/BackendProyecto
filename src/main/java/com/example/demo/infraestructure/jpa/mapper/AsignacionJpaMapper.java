@@ -7,6 +7,7 @@ public class AsignacionJpaMapper {
     public static Asignacion toDomain(AsignacionEntity entity) {
         return new Asignacion(
                 entity.getId(),
+                entity.getNombre(),
                 entity.getMonto(),
                 entity.getFecha(),
                 entity.getDescripcion()
@@ -16,6 +17,7 @@ public class AsignacionJpaMapper {
     public static AsignacionEntity toEntity(Asignacion asignacion) {
         AsignacionEntity entity = new AsignacionEntity();
         entity.setId(asignacion.getId());
+        entity.setNombre(asignacion.getNombre());
         entity.setMonto(asignacion.getMonto());
         entity.setFecha(asignacion.getFecha());
         entity.setDescripcion(asignacion.getDescripcion());

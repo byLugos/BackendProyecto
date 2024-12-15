@@ -9,6 +9,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class AsignacionRequest {
+    private String nombre;
     private Double monto;
     private Date fecha;
     private String descripcion;

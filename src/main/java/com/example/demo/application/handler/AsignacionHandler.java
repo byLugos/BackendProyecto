@@ -19,6 +19,7 @@ public class AsignacionHandler {
     public AsignacionResponse agregarAsignacion(Long idRubro, AsignacionRequest request) {
         return AsignacionMapper.toResponse(asignacionService.agregarAsignacion(
                 idRubro,
+                request.getNombre(),
                 request.getMonto(),
                 request.getFecha(),
                 request.getDescripcion()

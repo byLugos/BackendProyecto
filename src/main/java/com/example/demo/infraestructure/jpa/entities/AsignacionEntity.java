@@ -16,6 +16,8 @@ public class AsignacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nombre;
+
     private Double monto;
 
     private Date fecha;
