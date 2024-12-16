@@ -18,16 +18,21 @@ public class AuthService {
     }
 
     public String login(String email, String password) {
-        // Buscar usuario por email usando el puerto
+        // Buscar usuario por email
         Usuario usuario = usuarioOut.findByEmail(email)
                 .orElseThrow(() -> new ValidationException("Usuario no encontrado"));
-
-        // Comparar contraseñas directamente
+        System.out.println("Usuario encontrado: " + usuario.getEmail() + " - " + usuario.getPassword());
+        // Comparar contraseña directamente
         if (!usuario.getPassword().equals(password)) {
+            System.out.println("Contraseña enviada: " + password);
+            System.out.println("Contraseña almacenada: " + usuario.getPassword());
             throw new ValidationException("Contraseña incorrecta");
         }
 
+        String token = jwtUtil.generateToken(usuario.getEmail());
+        System.out.println("Token generado: " + token);
         // Generar y devolver token JWT
         return jwtUtil.generateToken(usuario.getEmail());
+
     }
 }
